@@ -29,7 +29,7 @@ services:
     working_dir: /home/jovyan/work
     #environment:
     #  - PASSWORD=password
-    ports: 
+    ports:
       - 8888:8888
     volumes:
       - type: bind

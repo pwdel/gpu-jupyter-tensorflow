@@ -1,0 +1,10 @@
+name: tf_gpu_env
+channels:
+  - anaconda
+  - conda-forge
+dependencies:
+  - anaconda::tensorflow-gpu=2.4.1
+  - conda-forge::jupyterlab=2.0.0 # 28 Feb 2020, last known date of working with GeForce 1070
+  - numpy=1.23.0
+  - pandas=1.5.2
+  - ipykernel

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Running commands in a seperate shell after activation in a previous entrypoint script.
+
+echo "Switching to tf_gpu_env conda environment."
+
+conda activate tf_gpu_env
+
+echo "Confirming we are on the tf_gpu_env."
+
+# Get the list of Conda environments
+env_list=$(conda info --envs)
+
+# filter for *, the current environment
+current_env=$(echo "$env_list" | grep "^\*" | awk '{print $2}')
+
+echo "Currently active Conda environment: $current_env"
+
+echo "Listing out jupyter dependencies available with conda list for ${current_env}"
+
+echo $(conda list | grep jupyter)
+
+echo "Launching notebook."
+
+jupyter lab --notebook-dir=/home/jovyan --ip=0.0.0.0 --no-browser --allow-root --port=8888 --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_origin='*'
