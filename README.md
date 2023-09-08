@@ -1,5 +1,3 @@
-# gpu-jupyter-tensorflow
-
 # Reference Documentation
 
 * [Docker GPU Support](https://docs.docker.com/compose/gpu-support/)
@@ -13,7 +11,7 @@
 # How to Use This Repo
 
 * constants.env is a file that contains various constants across the below files to keep things consistent.
-* base.Dockerfile builds a cuda ubuntu 22 image which can connect to the underlying nvidia gpu.
+* base.Dockerfile builds a cuda ubuntu 22 image which can connect to the underlying nvidia gpu. 
 * jupyter.Dockerfile uses the cuda ubuntu 22 as a base, and then builds jupyter on top of that.
 * buildimageandtag is a bash script which ties the two together and tags it so that docker-compose can use it.
 * docker-compose.yaml has two services, a test and cudajuypyter service.

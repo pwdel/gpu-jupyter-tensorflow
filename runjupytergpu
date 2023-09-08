@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ./.env
+
+echo "Running finalized CUDA-based jupyter notebook image ${JUPYTER_IMAGE_NAME} as service {CUDA_JUPYTER_SERVICE_NAME}"
+echo "Container: ${JUPYTER_CONTAINER_NAME}"
+
+docker compose up -d $CUDA_JUPYTER_SERVICE_NAME
+
+exit 0

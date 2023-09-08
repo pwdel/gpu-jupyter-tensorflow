@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ./constants.env
+
+docker exec -u root -it $JUPYTER_CONTAINER_NAME /bin/bash

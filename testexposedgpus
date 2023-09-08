@@ -1,0 +1,5 @@
+#!/bin/bash 
+
+echo "Testing command nvidia-smi with docker compose"
+
+docker compose run test

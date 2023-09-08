@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+  test:
+    image: ${NVIDIA_CUDA_BASE}
+    command: nvidia-smi
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu] # required
+              # device_ids (for setting specific device, mutually exclusive to count)
+              # options
+
+  cudajupyternotebook:
+    image: ${JUPYTER_IMAGE_NAME}
+    container_name: ${JUPYTER_CONTAINER_NAME}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu] # required
+              # device_ids (for setting specific device, mutually exclusive to count)
+              # options
+    working_dir: /home/jovyan/work
+    #environment:
+    #  - PASSWORD=password
+    ports: 
+      - 8888:8888
+    volumes:
+      - type: bind
+        source: ./volumebindmount
+        target: /home/jovyan/work
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    tty: true
+    # command:  ["/bin/bash"]  # Override the command to start a bash shell

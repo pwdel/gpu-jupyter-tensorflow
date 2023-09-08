@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source ./.env
+
+echo "Building base image ${LOCAL_BASE_IMAGE_NAME} and tagging with name: ${LOCAL_BASE_IMAGE_NAME}"
+
+echo "Using NVIDIA CUDA base image ${NVIDIA_CUDA_BASE}"
+
+sudo docker build -t $LOCAL_BASE_IMAGE_NAME -f $LOCAL_BASE_DOCKERFILE_PATH --build-arg NVIDIA_CUDA_BASE=$NVIDIA_CUDA_BASE .
+
+echo "Building jupyter image ${JUPYTER_IMAGE_NAME} and tagging with name: ${JUPYTER_IMAGE_NAME}"
+
+sudo docker build -t $JUPYTER_IMAGE_NAME -f $JUPYTER_DOCKERFILE_PATH --build-arg LOCAL_BASE_IMAGE_NAME=$LOCAL_BASE_IMAGE_NAME .
