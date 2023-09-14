@@ -2,6 +2,11 @@
 
 * MLOPS: Install sklearn via conda in image
 * MLOPS: Install matplotlib via conda in image
+* MLOPS: Install datasets bitsandbytes einops wandb
+* MLOPS: Install trl transformers accelerate git+https://github.com/huggingface/peft.git
+* MLOPS: Fix /opt/conda/envs/tf_gpu_env/lib/python3.9/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+* MLOPS:
+
 
 * DS: Create PCA/Kmeans analysis preserving market_id information.
 * DS: Output CLUSTER and MARKET_TITLE to a huge dict list which we can use to train an LLM
