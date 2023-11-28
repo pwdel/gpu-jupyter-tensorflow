@@ -6,5 +6,3 @@ echo "Running finalized CUDA-based jupyter notebook image ${JUPYTER_IMAGE_NAME} 
 echo "Container: ${JUPYTER_CONTAINER_NAME}"
 
 docker compose up -d $CUDA_JUPYTER_SERVICE_NAME
-
-exit 0
