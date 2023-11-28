@@ -121,10 +121,11 @@ SHELL ["conda", "run", "-n", "tf_gpu_env", "/bin/bash", "-c"]
 
 # The following will take a long time to build.
 
-# Install dependencies using the environment.yaml
-COPY --chown=jovyan:users environment.yaml /tmp/environment.yaml
-RUN conda env update -n tf_gpu_env -f /tmp/environment.yaml \
-   && rm /tmp/environment.yaml \
+# Install dependencies using the environment.yaml files
+# tf_gpu_env.yaml first
+COPY --chown=jovyan:users tf_gpu_env.yaml /tmp/tf_gpu_env.yaml
+RUN conda env update -n tf_gpu_env -f /tmp/tf_gpu_env.yaml \
+   && rm /tmp/tf_gpu_env.yaml \
    && jupyter lab --generate-config \
    && rm -rf ${HOME}/.cache/yarn \
    && chown -R ${NB_USER}:users ${CONDA_DIR} \
@@ -132,6 +133,23 @@ RUN conda env update -n tf_gpu_env -f /tmp/environment.yaml \
 
 # Register the conda environment as a Jupyter kernel
 RUN python -m ipykernel install --user --name=tf_gpu_env
+
+# Activate Conda Environment to install requirements
+RUN conda create -y -n pt_gpu_env python=3.9.0
+
+# Now go into that Conda environment as a shell
+SHELL ["conda", "run", "-n", "pt_gpu_env", "/bin/bash", "-c"]
+
+# then pt_gpu_env.yaml
+COPY --chown=jovyan:users pt_gpu_env.yaml /tmp/pt_gpu_env.yaml
+RUN conda env update -n pt_gpu_env -f /tmp/pt_gpu_env.yaml \
+   && rm /tmp/pt_gpu_env.yaml \
+   && jupyter lab --generate-config \
+   && rm -rf ${HOME}/.cache/yarn \
+   && chown -R ${NB_USER}:users ${CONDA_DIR} \
+   && chown -R ${NB_USER}:users ${HOME}
+
+RUN python -m ipykernel install --user --name=pt_gpu_env
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
