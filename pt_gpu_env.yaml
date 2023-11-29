@@ -5,8 +5,8 @@ channels:
 dependencies:
   - conda-forge::jupyterlab=2.0.0 # 28 Feb 2020, last known date of working with GeForce 1070
   # - torch=1.4.0 # ... 15 Jan 2020 version.  previously only installed 2.1.0 on terminal with `conda install pytorch cudatoolkit=11.8 -c pytorch`, might need to be 1.13.1
-  - cudatoolkit=11.8 # ... has not been tested, appears to mimic cudatoolkit=11.8 above
-  - xformers=0.0.20
-  - einops=0.6.1
-  - cherrypy=18.8.0
-  - transformers=4.29.2
+  #- cudatoolkit=11.8 # ... has not been tested, appears to mimic cudatoolkit=11.8 above
+  #- xformers=0.0.20
+  #- einops=0.6.1
+  #- cherrypy=18.8.0
+  #- transformers=4.29.2

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source ./.env
+
+echo "Building base image ${LOCAL_BASE_IMAGE_NAME} and tagging with name: ${LOCAL_BASE_IMAGE_NAME}"
+
+echo "Using NVIDIA CUDA base image ${NVIDIA_CUDA_BASE}"
+
+# Start the Docker build in the background as a shell job
+(sudo docker build -t $LOCAL_BASE_IMAGE_NAME -f $LOCAL_BASE_DOCKERFILE_PATH --build-arg NVIDIA_CUDA_BASE=$NVIDIA_CUDA_BASE) &
+
+# You can add other commands or scripts here if needed
+
+echo "Building jupyter image ${JUPYTER_IMAGE_NAME} and tagging with name: ${JUPYTER_IMAGE_NAME}"
+
+# Start the next Docker build in the background as a shell job
+(sudo docker build -t $JUPYTER_IMAGE_NAME -f $JUPYTER_DOCKERFILE_PATH --build-arg LOCAL_BASE_IMAGE_NAME=$LOCAL_BASE_IMAGE_NAME) &
+
+# You can continue with other commands or scripts here
+
+# Wait for all background jobs to finish (optional)
+wait
+
+# Optionally, you can add cleanup or post-build steps here
