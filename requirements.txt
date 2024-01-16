@@ -1,3 +1,0 @@
-jupyterlab==2.0.0 # 28 Feb 2020, last known date of working with GeForce 1070
-numpy==1.23.0 # 22 Jun 2022
-pandas==1.5.2 # 22 Nov 2022

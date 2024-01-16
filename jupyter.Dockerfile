@@ -113,14 +113,26 @@ RUN curl -sL "https://github.com/conda-forge/miniforge/releases/download/${MINIF
    && chown -R ${NB_USER}:users ${CONDA_DIR} \
    && chown -R ${NB_USER}:users ${HOME}
 
-# install - requirements.txt
-COPY --chown=jovyan:users requirements.txt /tmp
-RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \
-   && rm -f /tmp/requirements.txt \
+# Activate Conda Environment to install requirements
+RUN conda create -y -n tf_gpu_env python=3.9.0
+
+# Now go into that Conda environment as a shell
+SHELL ["conda", "run", "-n", "tf_gpu_env", "/bin/bash", "-c"]
+
+# The following will take a long time to build.
+
+# Install dependencies using the environment.yaml files
+# tf_gpu_env.yaml first
+COPY --chown=jovyan:users tf_gpu_env.yaml /tmp/tf_gpu_env.yaml
+RUN conda env update -n tf_gpu_env -f /tmp/tf_gpu_env.yaml \
+   && rm /tmp/tf_gpu_env.yaml \
    && jupyter lab --generate-config \
    && rm -rf ${HOME}/.cache/yarn \
    && chown -R ${NB_USER}:users ${CONDA_DIR} \
    && chown -R ${NB_USER}:users ${HOME}
+
+# Register the conda environment as a Jupyter kernel
+RUN python -m ipykernel install --user --name=tf_gpu_env
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
@@ -140,4 +152,12 @@ EXPOSE 8888
 
 ENV NB_PREFIX /
 
-CMD ["sh","-c", "jupyter lab --notebook-dir=/home/jovyan --ip=0.0.0.0 --no-browser --allow-root --port=8888 --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_origin='*' --NotebookApp.base_url=${NB_PREFIX}"]
+# Noop Change
+RUN echo "anoner anoner noop change."
+
+# Copy Entrypoint Script into Image
+COPY entrypoint /usr/local/bin/
+COPY conda_jupyterlaunch /usr/local/bin
+
+# The code to run when container is started:
+ENTRYPOINT ["conda", "run", "-n", "tf_gpu_env", "bash", "/usr/local/bin/entrypoint"]
