@@ -1,0 +1,6 @@
+question,answer
+What is the definition of a group in abstract algebra?,"A set with an operation that is associative, has an identity element, and every element has an inverse."
+How is a ring in algebra different from a group?,A ring has two operations (addition and multiplication) and must be an abelian group under addition.
+What is a field in algebra?,A field is a ring in which every non-zero element has a multiplicative inverse.
+Explain the concept of a vector space.,A vector space is a collection of vectors that can be added together and multiplied by scalars.
+What is an isomorphism in algebra?,"An isomorphism is a bijective homomorphism between two algebraic structures, preserving the operation."
