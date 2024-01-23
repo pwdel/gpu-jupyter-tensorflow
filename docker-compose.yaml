@@ -35,6 +35,10 @@ services:
       - type: bind
         source: ./volumebindmount
         target: /home/jovyan/work
+      - type: bind
+        source: /usr/lib/x86_64-linux-gnu # location on our host machine where we find our cuda libraries
+        target: /usr/local/nvidia/lib # default LD_LIBRARY_PATH
+        read_only: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
     tty: true
